@@ -1,0 +1,121 @@
+window.alert("Clickez sur les bulles c'est plus 1 sinon c'est -1");
+const counterDisplay = document.querySelector('h3');
+let counter = 0;
+document.body.addEventListener('click', () => {
+    counter--;
+    counterDisplay.textContent = counter;
+});
+
+
+const bubbleMaker = () => {
+
+//créer un span avec la class bubble
+    const bubble = document.createElement('span');
+    bubble.classList.add('bubble');
+    document.body.appendChild(bubble);
+
+    // const checkout = document.getElementsByTagName('body');
+
+//lui donner une taille aléatoire => Math.random()
+    const size = Math.random() * 200 + 100 + "px" ;
+    bubble.style.height = size;
+    bubble.style.width = size;
+
+//lui donner un point de départ aléatoire
+    bubble.style.top = Math.random() * 100 + 50 + "%";
+    bubble.style.left = Math.random() * 100 + "%";
+
+//lui donner une orientation aléatoire
+    const plusMinus = Math.random() > 0.5 ? 1 : -1;
+    bubble.style.setProperty('--left', Math.random() * 100 * plusMinus + "%");
+
+    bubble.addEventListener('click', (args) => {
+        counter++;
+        counterDisplay.textContent = counter;
+        bubble.remove();
+        args.stopPropagation();
+    });
+
+    // bubble.addEventListener('click', (args) => {
+    //     args.stopPropagation();
+
+    // body.addEventListener('click', () => {
+    //     counter--;
+    //     counterDisplay.textContent = counter;
+    // });
+
+//pour que les bulles se suppriment après leur temps d'apparition (10s)
+    setTimeout(() => {
+        bubble.remove();
+    }, 7000);
+};
+
+setInterval(bubbleMaker, 900);
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+   
+    <h3>0</h3>
+
+
+
+<script src="bulle.js"></script>
+</body>
+</html>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+    width: 100%;
+    height: 100vh;
+    background-color: lightcyan;
+    
+}
+
+.bubble {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(199, 164, 51, 0.482);
+    opacity: 0;
+    animation: anim 10s forwards;
+    filter: hue-rotate(0deg);
+}
+
+.bubble:hover {
+    cursor: crosshair;
+}
+
+
+@keyframes anim {
+    to {
+        top: -300px;
+        left: var(--left);
+        opacity: 1;
+        filter: hue-rotate(720deg);
+    }
+}
+
+h3 {
+    font-size: 10rem;
+    text-align: center;
+    margin-top: 20px;
+    color: rgba(85, 85, 85, 0.694);
+}
